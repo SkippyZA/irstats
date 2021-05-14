@@ -38,7 +38,7 @@ type RaceStatsItem struct {
 
 type RaceStats = []RaceStatsItem
 
-// LastRaceStats Returns stat summary for the driver's last 10 races as seen on the /CareerStats page.
+// LastRaceStats returns stat summary for the driver's last 10 races as seen on the /CareerStats page.
 func (c *Client) LastRaceStats(custID *string) (*RaceStats, *http.Response, error) {
 	raceStats := &RaceStats{}
 	resp, err := c.do(UrlPathLastRaceStats, &map[string]string{"custid": *custID}, raceStats)

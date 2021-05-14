@@ -22,7 +22,7 @@ type CareerStatItem struct {
 
 type CareerStats = []CareerStatItem
 
-// CareerStats Returns driver career stats as seen on the driver profile page.
+// CareerStats returns driver career stats as seen on the driver profile page.
 // E.g. Starts, Avg Inc., Win %, etc.
 func (c *Client) CareerStats(custID *string) (*CareerStats, *http.Response, error) {
 	p := map[string]string{

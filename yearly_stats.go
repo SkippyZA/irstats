@@ -23,6 +23,7 @@ type YearlyStatsItem struct {
 
 type YearlyStats = []YearlyStatsItem
 
+// YearlyStats returns the breakdown of career stats by year, as seen on the /CareerStats driver profile.
 func (c *Client) YearlyStats(custID *string) (*YearlyStats, *http.Response, error) {
 	p := map[string]string{
 		"custid": *custID,

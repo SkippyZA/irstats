@@ -4,7 +4,7 @@ import "net/http"
 
 type CarsDriven = []int
 
-// CarsDriven Returns which cars (car_id) someone has driven
+// CarsDriven returns which cars (car_id) someone has driven
 func (c *Client) CarsDriven(custID *string) (*CarsDriven, *http.Response, error) {
 	p := map[string]string{
 		"custid": *custID,
