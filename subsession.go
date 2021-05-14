@@ -163,6 +163,8 @@ type SubSessionDriver struct {
 	WheelColor           string  `json:"wheel_color"`
 }
 
+// SubSessionData Returns extensive data about a session.
+// This endpoint contains data points about a session that is unavailable anywhere else.
 func (c *Client) SubSessionData(subSessionID *string, custID *string) (*SubSessionResult, error) {
 	p := map[string]string{
 		"subsessionID": *subSessionID,
