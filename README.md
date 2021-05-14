@@ -27,5 +27,5 @@ if err != nil {
 
 subSessionID := "1000"
 customerID := "1234"
-data, err := client.SubSessionData(&subSessionID, &customerID)
+data, _, err := client.SubSessionData(&subSessionID, &customerID)
 ```
