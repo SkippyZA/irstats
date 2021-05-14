@@ -4,6 +4,7 @@
 [![Test](https://github.com/SkippyZA/irstats/actions/workflows/test.yml/badge.svg)](https://github.com/SkippyZA/irstats/actions/workflows/test.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/skippyza/irstats.svg)](https://pkg.go.dev/github.com/skippyza/irstats)
 [![Go Report Card](https://goreportcard.com/badge/github.com/skippyza/irstats)](https://goreportcard.com/report/github.com/skippyza/irstats)
+[![codecov](https://codecov.io/gh/SkippyZA/irstats/branch/master/graph/badge.svg?token=8S1FT6QP50)](https://codecov.io/gh/SkippyZA/irstats)
 
 This package is an API "wrapper" for retrieving data from iRacing. We use the term "wrapper" loosely as iRacing does not yet have an officially documented API; However, we've done our best to build something that might resemble one.
 
