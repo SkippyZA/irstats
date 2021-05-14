@@ -13,8 +13,7 @@ func TestSubSessionData(t *testing.T) {
 	mux, server, client := setup(t)
 	defer teardown(server)
 
-	path := "/membersite/member/GetSubsessionResults"
-	mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc(irstats.UrlPathSubSessionResults, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, loadFixture("testdata/subsession_data.json"))
