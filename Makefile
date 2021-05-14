@@ -6,7 +6,7 @@ TEST_PARALLEL?=1
 
 ## cov: Run unit tests and generate code coverage
 cov:
-	go test -mod vendor -v -p=$(TEST_PARALLEL) -run "$(TEST_PATTERN)" ./... -covermode='count' -coverprofile='.cover.out'
+	go test -mod vendor -v -race -p=$(TEST_PARALLEL) -run "$(TEST_PATTERN)" ./... -covermode='atomic' -coverprofile='.cover.out'
 
 ## open-cov: Open the code coverage report in your browser
 open-cov:
@@ -23,7 +23,7 @@ lint:
 
 ## test: Run the project unit tests
 test:
-	go test -mod vendor -p=$(TEST_PARALLEL) -run "$(TEST_PATTERN)" ./...
+	go test -mod vendor -v -race -p=$(TEST_PARALLEL) -run "$(TEST_PATTERN)" ./...
 
 ## :
 ## help: Print out available make targets.
