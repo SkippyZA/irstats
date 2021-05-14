@@ -13,11 +13,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v1
 
-      - name: Release Notary Action
-        uses: docker://aevea/release-notary
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: goreleaser
         uses: docker://goreleaser/goreleaser
         env:
@@ -25,3 +20,8 @@ jobs:
         with:
           args: release
         if: success()
+
+      - name: Release Notary Action
+        uses: docker://aevea/release-notary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
