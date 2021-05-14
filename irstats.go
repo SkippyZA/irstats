@@ -71,6 +71,11 @@ func (c *Client) do(path string, params *map[string]string, v interface{}) error
 		return err
 	}
 
+	// If there is no target to unmarshal the json to, then we return out here
+	if v == nil {
+		return nil
+	}
+
 	err = json.Unmarshal(resp.Body(), v)
 	if err != nil {
 		log.Println("Failed to unmarshal response body", err)

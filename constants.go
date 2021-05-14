@@ -1,13 +1,19 @@
 package irstats
 
+const (
+	sitePath  = "/membersite/member"
+	statsPath = "/memberstats/member"
+)
+
 var (
 	UrlPathLogin = "/membersite/Login"
 
 	// Member site paths
-	UrlPathSubSessionResults = "/membersite/member/GetSubsessionResults"
+	UrlPathSubSessionResults = sitePath + "/GetSubsessionResults"
 
 	// Member stats paths
-	UrlPathLastRaceStats = "/memberstats/member/GetLastRacesStats"
+	UrlPathLastRaceStats = statsPath + "/GetLastRacesStats"
+	UrlPathCarsDriven    = statsPath + "/GetCarsDriven"
 )
 
 // Holds the index for each license type
