@@ -28,6 +28,8 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
+      - name: Fetch dependencies
+        run: make deps
       - name: Test
         run: make test
   go-mod-tidy:
