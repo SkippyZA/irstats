@@ -1,0 +1,50 @@
+name: Test
+
+on: 
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  go-test:
+    name: "Go Test"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        go-version: [1.14.x, 1.15.x, 1.16.x]
+
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Test
+        run: make test
+  go-mod-tidy:
+    name: "Go mod tidy"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.16.x
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Tidy check
+        run: go mod tidy
