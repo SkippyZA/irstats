@@ -6,16 +6,20 @@ const (
 )
 
 var (
-	UrlPathLogin = "/membersite/Login"
+	URLPathLogin = "/membersite/Login"
+)
 
-	// Member site paths
-	UrlPathSubSessionResults = sitePath + "/GetSubsessionResults"
+// Member site paths
+var (
+	URLPathSubSessionResults = sitePath + "/GetSubsessionResults"
+)
 
-	// Member stats paths
-	UrlPathLastRaceStats = statsPath + "/GetLastRacesStats"
-	UrlPathCarsDriven    = statsPath + "/GetCarsDriven"
-	UrlPathCareerStats   = statsPath + "/GetCareerStats"
-	UrlPathYearlyStats   = statsPath + "/GetYearlyStats"
+// Member stats paths
+var (
+	URLPathLastRaceStats = statsPath + "/GetLastRacesStats"
+	URLPathCarsDriven    = statsPath + "/GetCarsDriven"
+	URLPathCareerStats   = statsPath + "/GetCareerStats"
+	URLPathYearlyStats   = statsPath + "/GetYearlyStats"
 )
 
 // Holds the index for each license type

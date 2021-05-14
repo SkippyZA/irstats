@@ -30,6 +30,6 @@ func (c *Client) CareerStats(custID *string) (*CareerStats, *http.Response, erro
 	}
 
 	careerStats := &CareerStats{}
-	resp, err := c.do(UrlPathCareerStats, &p, careerStats)
+	resp, err := c.do(URLPathCareerStats, &p, careerStats)
 	return careerStats, resp, err
 }

@@ -30,6 +30,6 @@ func (c *Client) YearlyStats(custID *string) (*YearlyStats, *http.Response, erro
 	}
 
 	yearlyStats := &YearlyStats{}
-	resp, err := c.do(UrlPathYearlyStats, &p, yearlyStats)
+	resp, err := c.do(URLPathYearlyStats, &p, yearlyStats)
 	return yearlyStats, resp, err
 }

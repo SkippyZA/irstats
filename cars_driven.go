@@ -11,6 +11,6 @@ func (c *Client) CarsDriven(custID *string) (*CarsDriven, *http.Response, error)
 	}
 
 	carsDriven := &CarsDriven{}
-	resp, err := c.do(UrlPathCarsDriven, &p, carsDriven)
+	resp, err := c.do(URLPathCarsDriven, &p, carsDriven)
 	return carsDriven, resp, err
 }

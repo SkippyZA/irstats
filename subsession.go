@@ -173,6 +173,6 @@ func (c *Client) SubSessionData(subSessionID *string, custID *string) (*SubSessi
 		"custid":       *custID,
 	}
 	sessionData := &SubSessionResult{}
-	resp, err := c.do(UrlPathSubSessionResults, &p, sessionData)
+	resp, err := c.do(URLPathSubSessionResults, &p, sessionData)
 	return sessionData, resp, err
 }

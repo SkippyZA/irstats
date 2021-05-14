@@ -11,7 +11,7 @@ import (
 
 const (
 	defaultUserAgent = "go-irstats"
-	defaultBaseUrl   = "https://members.iracing.com"
+	defaultBaseURL   = "https://members.iracing.com"
 )
 
 var (
@@ -29,7 +29,7 @@ type Client struct {
 
 func NewClient(username, password string, options ...ClientOptionFunc) (*Client, error) {
 	http := resty.New()
-	http.SetHostURL(defaultBaseUrl)
+	http.SetHostURL(defaultBaseURL)
 	http.SetRedirectPolicy(resty.NoRedirectPolicy())
 
 	c := &Client{
@@ -94,7 +94,7 @@ func (c *Client) login() error {
 			"username": c.username,
 			"password": c.password,
 		}).
-		Post(UrlPathLogin)
+		Post(URLPathLogin)
 
 	for _, cookie := range resp.Cookies() {
 		if cookie.Name == "irsso_membersv2" && len(cookie.Value) > 0 {

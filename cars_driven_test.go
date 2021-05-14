@@ -13,7 +13,7 @@ func TestCarsDriven(t *testing.T) {
 	mux, server, client := setup(t)
 	defer teardown(server)
 
-	mux.HandleFunc(irstats.UrlPathCarsDriven, func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc(irstats.URLPathCarsDriven, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `[ 1, 10, 20 ]`)

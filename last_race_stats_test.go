@@ -13,7 +13,7 @@ func TestLastRaceStats(t *testing.T) {
 	mux, server, client := setup(t)
 	defer teardown(server)
 
-	mux.HandleFunc(irstats.UrlPathLastRaceStats, func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc(irstats.URLPathLastRaceStats, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, loadFixture("testdata/last_race_stats.json"))

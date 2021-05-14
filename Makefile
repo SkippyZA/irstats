@@ -19,7 +19,7 @@ deps:
 
 ## lint: Lint code using golangci-lint
 lint:
-	golangci-lint run --color=always --out-format=tab --new-from-rev=HEAD~
+	golangci-lint run --out-format=tab
 
 ## test: Run the project unit tests
 test:

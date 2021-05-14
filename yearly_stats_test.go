@@ -13,7 +13,7 @@ func TestYearlyStats(t *testing.T) {
 	mux, server, client := setup(t)
 	defer teardown(server)
 
-	mux.HandleFunc(irstats.UrlPathYearlyStats, func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc(irstats.URLPathYearlyStats, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, loadFixture("testdata/yearly_stats.json"))
