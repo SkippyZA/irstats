@@ -19,7 +19,7 @@ func TestCarsDriven(t *testing.T) {
 		fmt.Fprint(w, `[ 1, 10, 20 ]`)
 	})
 
-	result, err := client.CarsDriven(irstats.String("2000"))
+	result, _, err := client.CarsDriven(irstats.String("2000"))
 	assert.NoError(t, err)
 
 	expected := &irstats.CarsDriven{1, 10, 20}

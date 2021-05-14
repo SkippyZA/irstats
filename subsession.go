@@ -1,5 +1,7 @@
 package irstats
 
+import "net/http"
+
 type SubSessionResult struct {
 	CategoryID            int                `json:"catid"`
 	CautionType           int                `json:"cautiontype"`
@@ -165,12 +167,12 @@ type SubSessionDriver struct {
 
 // SubSessionData Returns extensive data about a session.
 // This endpoint contains data points about a session that is unavailable anywhere else.
-func (c *Client) SubSessionData(subSessionID *string, custID *string) (*SubSessionResult, error) {
+func (c *Client) SubSessionData(subSessionID *string, custID *string) (*SubSessionResult, *http.Response, error) {
 	p := map[string]string{
 		"subsessionID": *subSessionID,
 		"custid":       *custID,
 	}
 	sessionData := &SubSessionResult{}
-	err := c.do(UrlPathSubSessionResults, &p, sessionData)
-	return sessionData, err
+	resp, err := c.do(UrlPathSubSessionResults, &p, sessionData)
+	return sessionData, resp, err
 }

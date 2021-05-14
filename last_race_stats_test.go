@@ -19,10 +19,10 @@ func TestLastRaceStats(t *testing.T) {
 		fmt.Fprint(w, loadFixture("testdata/last_race_stats.json"))
 	})
 
-	result, err := client.LastRaceStats(irstats.String("2000"))
+	result, _, err := client.LastRaceStats(irstats.String("2000"))
 	assert.NoError(t, err)
 
-	expected := []irstats.RaceStats{
+	expected := &irstats.RaceStats{
 		{
 			Date:                 "2018-05-04",
 			WinnerName:           "Steven+Inskip",

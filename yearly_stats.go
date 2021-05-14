@@ -1,5 +1,7 @@
 package irstats
 
+import "net/http"
+
 type YearlyStatsItem struct {
 	AvgFinish     int     `json:"avgFinish"`
 	AvgIncPerRace float64 `json:"avgIncPerRace"`
@@ -21,12 +23,12 @@ type YearlyStatsItem struct {
 
 type YearlyStats = []YearlyStatsItem
 
-func (c *Client) YearlyStats(custID *string) (*YearlyStats, error) {
+func (c *Client) YearlyStats(custID *string) (*YearlyStats, *http.Response, error) {
 	p := map[string]string{
 		"custid": *custID,
 	}
 
 	yearlyStats := &YearlyStats{}
-	err := c.do(UrlPathYearlyStats, &p, yearlyStats)
-	return yearlyStats, err
+	resp, err := c.do(UrlPathYearlyStats, &p, yearlyStats)
+	return yearlyStats, resp, err
 }

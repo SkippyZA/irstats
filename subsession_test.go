@@ -19,7 +19,7 @@ func TestSubSessionData(t *testing.T) {
 		fmt.Fprint(w, loadFixture("testdata/subsession_data.json"))
 	})
 
-	result, err := client.SubSessionData(irstats.String("1000"), irstats.String("2000"))
+	result, _, err := client.SubSessionData(irstats.String("1000"), irstats.String("2000"))
 	assert.NoError(t, err)
 
 	expected := &irstats.SubSessionResult{

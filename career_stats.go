@@ -1,5 +1,7 @@
 package irstats
 
+import "net/http"
+
 type CareerStatItem struct {
 	AvgFinish       int     `json:"avgFinish"`
 	AvgIncPerRace   float64 `json:"avgIncPerRace"`
@@ -22,12 +24,12 @@ type CareerStats = []CareerStatItem
 
 // CareerStats Returns driver career stats as seen on the driver profile page.
 // E.g. Starts, Avg Inc., Win %, etc.
-func (c *Client) CareerStats(custID *string) (*CareerStats, error) {
+func (c *Client) CareerStats(custID *string) (*CareerStats, *http.Response, error) {
 	p := map[string]string{
 		"custid": *custID,
 	}
 
 	careerStats := &CareerStats{}
-	err := c.do(UrlPathCareerStats, &p, careerStats)
-	return careerStats, err
+	resp, err := c.do(UrlPathCareerStats, &p, careerStats)
+	return careerStats, resp, err
 }

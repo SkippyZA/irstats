@@ -19,7 +19,7 @@ func TestYearlyStats(t *testing.T) {
 		fmt.Fprint(w, loadFixture("testdata/yearly_stats.json"))
 	})
 
-	result, err := client.YearlyStats(irstats.String("2000"))
+	result, _, err := client.YearlyStats(irstats.String("2000"))
 	assert.NoError(t, err)
 
 	expected := &irstats.YearlyStats{

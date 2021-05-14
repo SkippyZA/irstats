@@ -19,7 +19,7 @@ func TestCareerStats(t *testing.T) {
 		fmt.Fprint(w, loadFixture("testdata/career_stats.json"))
 	})
 
-	result, err := client.CareerStats(irstats.String("2000"))
+	result, _, err := client.CareerStats(irstats.String("2000"))
 	assert.NoError(t, err)
 
 	expected := &irstats.CareerStats{

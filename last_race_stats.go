@@ -1,6 +1,8 @@
 package irstats
 
-type RaceStats struct {
+import "net/http"
+
+type RaceStatsItem struct {
 	Date                 string `json:"date"`
 	WinnerName           string `json:"winnerName"`
 	QualifyTime          int    `json:"qualifyTime"`
@@ -34,10 +36,12 @@ type RaceStats struct {
 	FinishPosition       int    `json:"finishPos"`
 }
 
-// LastRaceStats Returns stat summary for the driver's last 10 races as seen on the /CareerStats page.
-func (c *Client) LastRaceStats(custID *string) ([]RaceStats, error) {
-	raceStats := []RaceStats{}
-	err := c.do(UrlPathLastRaceStats, &map[string]string{"custid": *custID}, &raceStats)
+type RaceStats = []RaceStatsItem
 
-	return raceStats, err
+// LastRaceStats Returns stat summary for the driver's last 10 races as seen on the /CareerStats page.
+func (c *Client) LastRaceStats(custID *string) (*RaceStats, *http.Response, error) {
+	raceStats := &RaceStats{}
+	resp, err := c.do(UrlPathLastRaceStats, &map[string]string{"custid": *custID}, raceStats)
+
+	return raceStats, resp, err
 }
