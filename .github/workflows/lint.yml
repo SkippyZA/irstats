@@ -7,6 +7,17 @@ on:
       - master
 
 jobs:
+  validate-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Run Commitsar
+        uses: docker://aevea/commitsar
+
   golangci-lint:
     name: runner / golangci-lint
     runs-on: ubuntu-latest
