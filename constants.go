@@ -15,6 +15,7 @@ var (
 	UrlPathLastRaceStats = statsPath + "/GetLastRacesStats"
 	UrlPathCarsDriven    = statsPath + "/GetCarsDriven"
 	UrlPathCareerStats   = statsPath + "/GetCareerStats"
+	UrlPathYearlyStats   = statsPath + "/GetYearlyStats"
 )
 
 // Holds the index for each license type
