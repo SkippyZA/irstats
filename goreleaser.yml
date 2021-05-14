@@ -1,0 +1,20 @@
+before:
+  hooks:
+    - make deps
+builds:
+  - skip: true
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+checksum:
+  name_template: "checksums.txt"
+release:
+  prerelease: auto
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  skip: true
