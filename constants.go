@@ -1,5 +1,7 @@
 package irstats
 
+import "errors"
+
 const (
 	sitePath  = "/membersite/member"
 	statsPath = "/memberstats/member"
@@ -50,6 +52,28 @@ type order = string
 const (
 	OrderDescending = order("desc")
 	OrderAscending  = order("asc")
+)
+
+type boolean bool
+
+func (lt boolean) IsValid() error {
+	switch lt {
+	case true, false:
+		return nil
+	}
+	return errors.New("Invalid boolean type")
+}
+
+func (b boolean) String() string {
+	if b {
+		return "1"
+	}
+	return "0"
+}
+
+const (
+	True  = boolean(true)
+	False = boolean(false)
 )
 
 // // Holds the index for each license type

@@ -9,20 +9,21 @@ import (
 type EventResults struct{}
 
 type EventResultsRequest struct {
+	// ShowRaces       *bool      `form:"showraces"`
 	CustID          *string    `form:"custid"`
-	ShowRaces       *bool      `form:"showraces"`
-	ShowQuals       *bool      `form:"showquals"`
-	ShowTimeTrials  *bool      `form:"showtts"`
-	ShowPractice    *bool      `form:"showops"`
-	ShowOfficial    *bool      `form:"showofficial"`
-	ShowUnofficial  *bool      `form:"showunofficial"`
-	ShowRookie      *bool      `form:"showrookie"`
-	ShowClassD      *bool      `form:"showclassd"`
-	ShowClassC      *bool      `form:"showclassc"`
-	ShowClassB      *bool      `form:"showclassb"`
-	ShowClassA      *bool      `form:"showclassa"`
-	ShowPro         *bool      `form:"showpro"`
-	ShowProWC       *bool      `form:"showprowc"`
+	ShowRaces       boolean    `form:"showraces"`
+	ShowQuals       boolean    `form:"showquals"`
+	ShowTimeTrials  boolean    `form:"showtts"`
+	ShowPractice    boolean    `form:"showops"`
+	ShowOfficial    boolean    `form:"showofficial"`
+	ShowUnofficial  boolean    `form:"showunofficial"`
+	ShowRookie      boolean    `form:"showrookie"`
+	ShowClassD      boolean    `form:"showclassd"`
+	ShowClassC      boolean    `form:"showclassc"`
+	ShowClassB      boolean    `form:"showclassb"`
+	ShowClassA      boolean    `form:"showclassa"`
+	ShowPro         boolean    `form:"showpro"`
+	ShowProWC       boolean    `form:"showprowc"`
 	LowerBound      *int       `form:"lowerbound"`
 	UpperBound      *int       `form:"upperbound"`
 	Sort            sortType   `form:"sort"`
