@@ -166,6 +166,7 @@ type SubSessionDriver struct {
 }
 
 // SubSessionData returns extensive data about a session.
+//
 // This endpoint contains data points about a session that is unavailable anywhere else.
 func (c *Client) SubSessionData(subSessionID *string, custID *string) (*SubSessionResult, *http.Response, error) {
 	p := map[string]string{

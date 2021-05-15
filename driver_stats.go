@@ -231,6 +231,7 @@ func something(v reflect.Value) *string {
 }
 
 // DriverStats returns a list of drivers that match the given parameters.
+//
 // This is the backend source for /DriverLookup.Do AKA 'Driver Stats.'
 func (c *Client) DriverStats(opts *DriverStatsRequest) (*DriverStatsResult, *http.Response, error) {
 	rType := reflect.TypeOf(*opts)
