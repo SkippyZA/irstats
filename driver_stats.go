@@ -2,10 +2,12 @@ package irstats
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"reflect"
+	"sort"
 	"strconv"
+
+	"github.com/skippyza/irstats/ref"
 )
 
 type DriverStats struct {
@@ -152,6 +154,17 @@ func (ds *DriverStatsResult) UnmarshalJSON(b []byte) error {
 		rowCount = int(objRaw.RowCount.(float64))
 	}
 
+	// Sort the slice by RN. RN is the "ranking" based you the sort + order
+	sort.SliceStable(objRaw.Rows, func(i, j int) bool {
+		return objRaw.Rows[i].RN < objRaw.Rows[j].RN
+	})
+
+	// When RN is 0 it is showing yourself compared to others.
+	// TODO: perhaps this should be optional behaviour
+	if objRaw.Rows[0].RN == 0 {
+		objRaw.Rows = append(objRaw.Rows[:0], objRaw.Rows[1:]...)
+	}
+
 	ds.CustRow = custRow
 	ds.RowCount = rowCount
 	ds.Drivers = objRaw.Rows
@@ -160,39 +173,45 @@ func (ds *DriverStatsResult) UnmarshalJSON(b []byte) error {
 }
 
 type DriverStatsRequest struct {
-	Search           *string `form:"search"`
-	Friend           *string `form:"friend"`
-	Watched          *int    `form:"watched"`
-	Recent           *int    `form:"recent"`
-	Country          *string `form:"country"`
-	Category         *int    `form:"category"`
-	ClassLow         *int    `form:"classlow"`
-	ClassHigh        *int    `form:"classhigh"`
-	IRatingLow       *int    `form:"iratinglow"`
-	IRatingHigh      *int    `form:"iratinghigh"`
-	TTRatingLow      *int    `form:"ttratinglow"`
-	TTRatingHigh     *int    `form:"ttratinghigh"`
-	AvgStartLow      *int    `form:"avgstartlow"`
-	AvgStartHigh     *int    `form:"avgstarthigh"`
-	AvgFinishLow     *int    `form:"avgfinishlow"`
-	AvgFinishHigh    *int    `form:"avgfinishhigh"`
-	AvgPointsLow     *int    `form:"avgpointslow"`
-	AvgPointsHigh    *int    `form:"avgpointshigh"`
-	AvgIncidentsLow  *int    `form:"avgincidentslow"`
-	AvgIncidentsHigh *int    `form:"avgincidentshigh"`
-	CustID           *string `form:"custid"`
-	LowerBound       *int    `form:"lowerbound"`
-	UpperBound       *int    `form:"upperboudn"`
-	Sort             *string `form:"sort"`
-	Order            *string `form:"order"`
-	Active           *int    `form:"active"`
+	Search           *string  `form:"search"`
+	Friend           *string  `form:"friend"`
+	Watched          *int     `form:"watched"`
+	Recent           *int     `form:"recent"`
+	Country          *string  `form:"country"`
+	Category         category `form:"category"`
+	ClassLow         *int     `form:"classlow"`
+	ClassHigh        *int     `form:"classhigh"`
+	IRatingLow       *int     `form:"iratinglow"`
+	IRatingHigh      *int     `form:"iratinghigh"`
+	TTRatingLow      *int     `form:"ttratinglow"`
+	TTRatingHigh     *int     `form:"ttratinghigh"`
+	AvgStartLow      *int     `form:"avgstartlow"`
+	AvgStartHigh     *int     `form:"avgstarthigh"`
+	AvgFinishLow     *int     `form:"avgfinishlow"`
+	AvgFinishHigh    *int     `form:"avgfinishhigh"`
+	AvgPointsLow     *int     `form:"avgpointslow"`
+	AvgPointsHigh    *int     `form:"avgpointshigh"`
+	AvgIncidentsLow  *int     `form:"avgincidentslow"`
+	AvgIncidentsHigh *int     `form:"avgincidentshigh"`
+	CustID           *string  `form:"custid"`
+	LowerBound       *int     `form:"lowerbound"`
+	UpperBound       *int     `form:"upperbound"`
+	Sort             sortType `form:"sort"`
+	Order            order    `form:"order"`
+	Active           *int     `form:"active"`
 }
 
 func something(v reflect.Value) *string {
-	switch v.Elem().Kind() {
+	if v.Kind() == reflect.Ptr {
+		v = v.Elem()
+	}
+	switch v.Kind() {
 	// Handle string
 	case reflect.String:
-		return String(v.Elem().String())
+		if len(v.String()) == 0 {
+			return nil
+		}
+		return ref.String(v.String())
 
 	// Handle integers
 	case reflect.Int8:
@@ -204,7 +223,7 @@ func something(v reflect.Value) *string {
 	case reflect.Int64:
 		fallthrough
 	case reflect.Int:
-		return String(strconv.Itoa(int(v.Elem().Int())))
+		return ref.String(strconv.Itoa(int(v.Int())))
 
 	default:
 		return nil
@@ -232,8 +251,6 @@ func (c *Client) DriverStats(opts *DriverStatsRequest) (*DriverStatsResult, *htt
 		}
 		params[tag] = *value
 	}
-
-	fmt.Printf("params: %+v\n\n", params)
 
 	carsDriven := &DriverStatsResult{}
 	resp, err := c.do(URLPathDriverStats, &params, carsDriven)
