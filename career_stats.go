@@ -1,6 +1,9 @@
 package irstats
 
-import "net/http"
+import (
+	"net/http"
+	"net/url"
+)
 
 type CareerStatItem struct {
 	AvgFinish       int     `json:"avgFinish"`
@@ -26,11 +29,8 @@ type CareerStats = []CareerStatItem
 //
 // E.g. Starts, Avg Inc., Win %, etc.
 func (c *Client) CareerStats(custID *string) (*CareerStats, *http.Response, error) {
-	p := map[string][]string{
-		"custid": {*custID},
-	}
-
+	v := url.Values{"custid": {*custID}}
 	careerStats := &CareerStats{}
-	resp, err := c.do(URLPathCareerStats, &p, careerStats)
+	resp, err := c.do(URLPathCareerStats, &v, careerStats)
 	return careerStats, resp, err
 }

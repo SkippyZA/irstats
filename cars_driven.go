@@ -1,16 +1,16 @@
 package irstats
 
-import "net/http"
+import (
+	"net/http"
+	"net/url"
+)
 
 type CarsDriven = []int
 
 // CarsDriven returns which cars (car_id) someone has driven
 func (c *Client) CarsDriven(custID *string) (*CarsDriven, *http.Response, error) {
-	p := map[string][]string{
-		"custid": {*custID},
-	}
-
+	v := url.Values{"custid": {*custID}}
 	carsDriven := &CarsDriven{}
-	resp, err := c.do(URLPathCarsDriven, &p, carsDriven)
+	resp, err := c.do(URLPathCarsDriven, &v, carsDriven)
 	return carsDriven, resp, err
 }

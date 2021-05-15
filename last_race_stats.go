@@ -1,6 +1,9 @@
 package irstats
 
-import "net/http"
+import (
+	"net/http"
+	"net/url"
+)
 
 type RaceStatsItem struct {
 	Date                 string `json:"date"`
@@ -40,8 +43,9 @@ type RaceStats = []RaceStatsItem
 
 // LastRaceStats returns stat summary for the driver's last 10 races as seen on the /CareerStats page.
 func (c *Client) LastRaceStats(custID *string) (*RaceStats, *http.Response, error) {
+	v := url.Values{"custid": {*custID}}
 	raceStats := &RaceStats{}
-	resp, err := c.do(URLPathLastRaceStats, &map[string][]string{"custid": {*custID}}, raceStats)
+	resp, err := c.do(URLPathLastRaceStats, &v, raceStats)
 
 	return raceStats, resp, err
 }

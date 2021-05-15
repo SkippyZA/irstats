@@ -1,6 +1,9 @@
 package irstats
 
-import "net/http"
+import (
+	"net/http"
+	"net/url"
+)
 
 type SubSessionResult struct {
 	CategoryID            int                `json:"catid"`
@@ -169,11 +172,11 @@ type SubSessionDriver struct {
 //
 // This endpoint contains data points about a session that is unavailable anywhere else.
 func (c *Client) SubSessionData(subSessionID *string, custID *string) (*SubSessionResult, *http.Response, error) {
-	p := map[string][]string{
+	v := url.Values{
 		"subsessionID": {*subSessionID},
 		"custid":       {*custID},
 	}
 	sessionData := &SubSessionResult{}
-	resp, err := c.do(URLPathSubSessionResults, &p, sessionData)
+	resp, err := c.do(URLPathSubSessionResults, &v, sessionData)
 	return sessionData, resp, err
 }

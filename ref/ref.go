@@ -11,3 +11,7 @@ func Int(i int) *int {
 func Float64(f float64) *float64 {
 	return &f
 }
+
+func Bool(s bool) *bool {
+	return &s
+}

@@ -6,23 +6,23 @@ import (
 	"github.com/skippyza/irstats/internal/form"
 )
 
-type Results struct{}
+type EventResults struct{}
 
-type ResultsRequest struct {
+type EventResultsRequest struct {
 	CustID          *string    `form:"custid"`
-	ShowRaces       *int       `form:"showraces"`
-	ShowQuals       *int       `form:"showquals"`
-	ShowTimeTrials  *int       `form:"showtts"`
-	ShowPractice    *int       `form:"showops"`
-	ShowOfficial    *int       `form:"showofficial"`
-	ShowUnofficial  *int       `form:"showunofficial"`
-	ShowRookie      *int       `form:"showrookie"`
-	ShowClassD      *int       `form:"showclassd"`
-	ShowClassC      *int       `form:"showclassc"`
-	ShowClassB      *int       `form:"showclassb"`
-	ShowClassA      *int       `form:"showclassa"`
-	ShowPro         *int       `form:"showpro"`
-	ShowProWC       *int       `form:"showprowc"`
+	ShowRaces       *bool      `form:"showraces"`
+	ShowQuals       *bool      `form:"showquals"`
+	ShowTimeTrials  *bool      `form:"showtts"`
+	ShowPractice    *bool      `form:"showops"`
+	ShowOfficial    *bool      `form:"showofficial"`
+	ShowUnofficial  *bool      `form:"showunofficial"`
+	ShowRookie      *bool      `form:"showrookie"`
+	ShowClassD      *bool      `form:"showclassd"`
+	ShowClassC      *bool      `form:"showclassc"`
+	ShowClassB      *bool      `form:"showclassb"`
+	ShowClassA      *bool      `form:"showclassa"`
+	ShowPro         *bool      `form:"showpro"`
+	ShowProWC       *bool      `form:"showprowc"`
 	LowerBound      *int       `form:"lowerbound"`
 	UpperBound      *int       `form:"upperbound"`
 	Sort            sortType   `form:"sort"`
@@ -45,10 +45,11 @@ type ResultsRequest struct {
 	ChamppointsHigh *int       `form:"champpoints_high"`
 }
 
-func (c *Client) Results(opts *ResultsRequest) (*map[string]interface{}, *http.Response, error) {
-	params := form.ParseFormTags(*opts)
+// Results returns a list with an EventResults object for each of a driver's
+// past events that meet the selected criteria.
+func (c *Client) EventResults(opts *EventResultsRequest) (*map[string]interface{}, *http.Response, error) {
+	v := form.ParseFormTags(*opts)
 	results := &map[string]interface{}{}
-	resp, err := c.do(URLPathResults, &params, results)
-
+	resp, err := c.do(URLPathResults, &v, results)
 	return results, resp, err
 }

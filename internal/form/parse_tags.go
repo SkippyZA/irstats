@@ -1,7 +1,8 @@
 package form
 
 import (
-	"fmt"
+	"log"
+	"net/url"
 	"reflect"
 	"strconv"
 )
@@ -12,14 +13,17 @@ func mapToString(v reflect.Value) []string {
 	}
 
 	switch v.Kind() {
-	// Handle string
+	case reflect.Invalid:
+		return nil
+
 	case reflect.String:
 		if len(v.String()) == 0 {
 			return nil
 		}
 		return []string{v.String()}
 
-	// Handle integers
+	case reflect.Int:
+		fallthrough
 	case reflect.Int8:
 		fallthrough
 	case reflect.Int16:
@@ -27,9 +31,14 @@ func mapToString(v reflect.Value) []string {
 	case reflect.Int32:
 		fallthrough
 	case reflect.Int64:
-		fallthrough
-	case reflect.Int:
 		return []string{strconv.Itoa(int(v.Int()))}
+
+	case reflect.Bool:
+		val := "0"
+		if v.Bool() {
+			val = "1"
+		}
+		return []string{val}
 
 	case reflect.Slice:
 		arr := []string{}
@@ -40,15 +49,15 @@ func mapToString(v reflect.Value) []string {
 
 		return arr
 	default:
+		log.Printf("form.parse_tags: unmapped type %s", v.Kind())
 		return nil
 	}
 }
 
-func ParseFormTags(v interface{}) map[string][]string {
+func ParseFormTags(v interface{}) url.Values {
+	uv := url.Values{}
 	rType := reflect.TypeOf(v)
 	rValue := reflect.ValueOf(v)
-
-	params := map[string][]string{}
 
 	for i := 0; i < rType.NumField(); i++ {
 		f := rType.Field(i)
@@ -57,14 +66,16 @@ func ParseFormTags(v interface{}) map[string][]string {
 			continue
 		}
 
-		value := mapToString(rValue.Field(i))
-		if value == nil {
+		values := mapToString(rValue.Field(i))
+		if values == nil {
 			continue
 		}
-		params[tag] = value
+
+		for _, val := range values {
+			uv.Add(tag, val)
+		}
 	}
+	log.Printf("form_data.ParseFormTags: %#v", uv)
 
-	fmt.Printf("form_data.ParseFormTags: %#v\n", params)
-
-	return params
+	return uv
 }

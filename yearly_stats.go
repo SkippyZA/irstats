@@ -1,6 +1,9 @@
 package irstats
 
-import "net/http"
+import (
+	"net/http"
+	"net/url"
+)
 
 type YearlyStatsItem struct {
 	AvgFinish     int     `json:"avgFinish"`
@@ -25,11 +28,8 @@ type YearlyStats = []YearlyStatsItem
 
 // YearlyStats returns the breakdown of career stats by year, as seen on the /CareerStats driver profile.
 func (c *Client) YearlyStats(custID *string) (*YearlyStats, *http.Response, error) {
-	p := map[string][]string{
-		"custid": {*custID},
-	}
-
+	v := url.Values{"custid": {*custID}}
 	yearlyStats := &YearlyStats{}
-	resp, err := c.do(URLPathYearlyStats, &p, yearlyStats)
+	resp, err := c.do(URLPathYearlyStats, &v, yearlyStats)
 	return yearlyStats, resp, err
 }
