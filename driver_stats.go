@@ -109,12 +109,6 @@ type DriverStatsResult struct {
 }
 
 func (ds *DriverStatsResult) UnmarshalJSON(b []byte) error {
-	objRaw := struct {
-		CustRow  interface{}   `json:"17"`
-		RowCount interface{}   `json:"20"`
-		Rows     []DriverStats `json:"r"`
-	}{}
-
 	dsRaw := struct {
 		D json.RawMessage `json:"d"`
 	}{}
@@ -128,6 +122,11 @@ func (ds *DriverStatsResult) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 
+	objRaw := struct {
+		CustRow  interface{}   `json:"17"`
+		RowCount interface{}   `json:"20"`
+		Rows     []DriverStats `json:"r"`
+	}{}
 	err = json.Unmarshal(dsRaw.D, &objRaw)
 	if err != nil {
 		return err
