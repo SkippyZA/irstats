@@ -26,8 +26,8 @@ type CareerStats = []CareerStatItem
 //
 // E.g. Starts, Avg Inc., Win %, etc.
 func (c *Client) CareerStats(custID *string) (*CareerStats, *http.Response, error) {
-	p := map[string]string{
-		"custid": *custID,
+	p := map[string][]string{
+		"custid": {*custID},
 	}
 
 	careerStats := &CareerStats{}

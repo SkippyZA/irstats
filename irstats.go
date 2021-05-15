@@ -5,6 +5,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"net/url"
 
 	resty "github.com/go-resty/resty/v2"
 )
@@ -52,7 +53,7 @@ func NewClient(username, password string, options ...ClientOptionFunc) (*Client,
 	return c, nil
 }
 
-func (c *Client) do(path urlPath, params *map[string]string, v interface{}) (*http.Response, error) {
+func (c *Client) do(path urlPath, params *map[string][]string, v interface{}) (*http.Response, error) {
 	if err := c.assertLoggedIn(); err != nil {
 		return nil, err
 	}
@@ -64,7 +65,14 @@ func (c *Client) do(path urlPath, params *map[string]string, v interface{}) (*ht
 	if params == nil {
 		resp, err = r.Get(path)
 	} else {
-		resp, err = r.SetFormData(*params).Post(path)
+		urlValues := url.Values{}
+		for i, pArr := range *params {
+			for _, val := range pArr {
+				urlValues.Add(i, val)
+			}
+		}
+		r.SetFormDataFromValues(urlValues)
+		resp, err = r.Post(path)
 	}
 	rawResponse := resp.RawResponse
 
@@ -72,6 +80,8 @@ func (c *Client) do(path urlPath, params *map[string]string, v interface{}) (*ht
 		log.Printf("API request %s failed. %v\n", path, err)
 		return rawResponse, err
 	}
+
+	// fmt.Printf("BODY: %s\n", resp.Body())
 
 	// If there is no target to unmarshal the json to, then we return out here
 	if v == nil {

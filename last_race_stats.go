@@ -41,7 +41,7 @@ type RaceStats = []RaceStatsItem
 // LastRaceStats returns stat summary for the driver's last 10 races as seen on the /CareerStats page.
 func (c *Client) LastRaceStats(custID *string) (*RaceStats, *http.Response, error) {
 	raceStats := &RaceStats{}
-	resp, err := c.do(URLPathLastRaceStats, &map[string]string{"custid": *custID}, raceStats)
+	resp, err := c.do(URLPathLastRaceStats, &map[string][]string{"custid": {*custID}}, raceStats)
 
 	return raceStats, resp, err
 }

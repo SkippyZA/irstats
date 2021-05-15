@@ -9,46 +9,47 @@ type urlPath = string
 
 // iRacing API paths
 var (
-	URLPathLogin             urlPath = "/membersite/Login"
-	URLPathSubSessionResults         = sitePath + "/GetSubsessionResults"
-	URLPathLastRaceStats             = statsPath + "/GetLastRacesStats"
-	URLPathCarsDriven                = statsPath + "/GetCarsDriven"
-	URLPathCareerStats               = statsPath + "/GetCareerStats"
-	URLPathYearlyStats               = statsPath + "/GetYearlyStats"
-	URLPathDriverStats               = statsPath + "/GetDriverStats"
+	URLPathLogin             = urlPath("/membersite/Login")
+	URLPathSubSessionResults = urlPath(sitePath + "/GetSubsessionResults")
+	URLPathLastRaceStats     = urlPath(statsPath + "/GetLastRacesStats")
+	URLPathCarsDriven        = urlPath(statsPath + "/GetCarsDriven")
+	URLPathCareerStats       = urlPath(statsPath + "/GetCareerStats")
+	URLPathYearlyStats       = urlPath(statsPath + "/GetYearlyStats")
+	URLPathDriverStats       = urlPath(statsPath + "/GetDriverStats")
+	URLPathResults           = urlPath(statsPath + "/GetResults")
 )
 
 type sortType = string
 
 // Request sorting values
 const (
-	SortAvgFinishingPosition sortType = "avgfinishingposition"
-	SortAvgIncidents                  = "avgincidents"
-	SortAvgPoints                     = "avgpoints"
-	SortAvgStartingPosition           = "avgstartingposition"
-	SortClass                         = "class"
-	SortClubName                      = "clubname"
-	SortClubpoints                    = "clubpoints"
-	SortCountryCode                   = "countrycode"
-	SortDisplayName                   = "displayname"
-	SortIRating                       = "irating"
-	SortLaps                          = "laps"
-	SortLapsLead                      = "lapslead"
-	SortPoints                        = "points"
-	SortSessionName                   = "sessionname"
-	SortStartTime                     = "start_time"
-	SortStarts                        = "starts"
-	SortTTRating                      = "ttrating"
-	SortTop25pcnt                     = "top25pcnt"
-	SortWins                          = "wins"
+	SortAvgFinishingPosition = sortType("avgfinishingposition")
+	SortAvgIncidents         = sortType("avgincidents")
+	SortAvgPoints            = sortType("avgpoints")
+	SortAvgStartingPosition  = sortType("avgstartingposition")
+	SortClass                = sortType("class")
+	SortClubName             = sortType("clubname")
+	SortClubpoints           = sortType("clubpoints")
+	SortCountryCode          = sortType("countrycode")
+	SortDisplayName          = sortType("displayname")
+	SortIRating              = sortType("irating")
+	SortLaps                 = sortType("laps")
+	SortLapsLead             = sortType("lapslead")
+	SortPoints               = sortType("points")
+	SortSessionName          = sortType("sessionname")
+	SortStartTime            = sortType("start_time")
+	SortStarts               = sortType("starts")
+	SortTTRating             = sortType("ttrating")
+	SortTop25pcnt            = sortType("top25pcnt")
+	SortWins                 = sortType("wins")
 )
 
 type order = string
 
 // Request ordering values
 const (
-	OrderDescending order = "desc"
-	OrderAscending        = "asc"
+	OrderDescending = order("desc")
+	OrderAscending  = order("asc")
 )
 
 // // Holds the index for each license type

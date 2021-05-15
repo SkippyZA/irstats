@@ -3,11 +3,10 @@ package irstats
 import (
 	"encoding/json"
 	"net/http"
-	"reflect"
 	"sort"
 	"strconv"
 
-	"github.com/skippyza/irstats/ref"
+	"github.com/skippyza/irstats/internal/form"
 )
 
 type DriverStats struct {
@@ -201,57 +200,11 @@ type DriverStatsRequest struct {
 	Active           *int     `form:"active"`
 }
 
-func something(v reflect.Value) *string {
-	if v.Kind() == reflect.Ptr {
-		v = v.Elem()
-	}
-	switch v.Kind() {
-	// Handle string
-	case reflect.String:
-		if len(v.String()) == 0 {
-			return nil
-		}
-		return ref.String(v.String())
-
-	// Handle integers
-	case reflect.Int8:
-		fallthrough
-	case reflect.Int16:
-		fallthrough
-	case reflect.Int32:
-		fallthrough
-	case reflect.Int64:
-		fallthrough
-	case reflect.Int:
-		return ref.String(strconv.Itoa(int(v.Int())))
-
-	default:
-		return nil
-	}
-}
-
 // DriverStats returns a list of drivers that match the given parameters.
 //
 // This is the backend source for /DriverLookup.Do AKA 'Driver Stats.'
 func (c *Client) DriverStats(opts *DriverStatsRequest) (*DriverStatsResult, *http.Response, error) {
-	rType := reflect.TypeOf(*opts)
-	rValue := reflect.ValueOf(*opts)
-
-	params := map[string]string{}
-
-	for i := 0; i < rType.NumField(); i++ {
-		f := rType.Field(i)
-		tag := f.Tag.Get("form")
-		if tag == "" {
-			continue
-		}
-
-		value := something(rValue.Field(i))
-		if value == nil {
-			continue
-		}
-		params[tag] = *value
-	}
+	params := form.ParseFormTags(*opts)
 
 	carsDriven := &DriverStatsResult{}
 	resp, err := c.do(URLPathDriverStats, &params, carsDriven)

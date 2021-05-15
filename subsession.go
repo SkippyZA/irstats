@@ -169,9 +169,9 @@ type SubSessionDriver struct {
 //
 // This endpoint contains data points about a session that is unavailable anywhere else.
 func (c *Client) SubSessionData(subSessionID *string, custID *string) (*SubSessionResult, *http.Response, error) {
-	p := map[string]string{
-		"subsessionID": *subSessionID,
-		"custid":       *custID,
+	p := map[string][]string{
+		"subsessionID": {*subSessionID},
+		"custid":       {*custID},
 	}
 	sessionData := &SubSessionResult{}
 	resp, err := c.do(URLPathSubSessionResults, &p, sessionData)

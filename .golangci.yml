@@ -11,8 +11,6 @@ output:
 
 # All available settings of specific linters
 linters-settings:
-  misspell:
-    locale: US
   unused:
     # Treat code as a library
     check-exported: false
@@ -30,7 +28,6 @@ linters:
     - govet
     - ineffassign
     - megacheck
-    - misspell
     - nakedret
     - nolintlint
     - staticcheck

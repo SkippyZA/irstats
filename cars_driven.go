@@ -6,8 +6,8 @@ type CarsDriven = []int
 
 // CarsDriven returns which cars (car_id) someone has driven
 func (c *Client) CarsDriven(custID *string) (*CarsDriven, *http.Response, error) {
-	p := map[string]string{
-		"custid": *custID,
+	p := map[string][]string{
+		"custid": {*custID},
 	}
 
 	carsDriven := &CarsDriven{}
