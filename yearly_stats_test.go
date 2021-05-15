@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/skippyza/irstats"
+	"github.com/skippyza/irstats/ref"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +20,7 @@ func TestYearlyStats(t *testing.T) {
 		fmt.Fprint(w, loadFixture("testdata/yearly_stats.json"))
 	})
 
-	result, _, err := client.YearlyStats(irstats.String("2000"))
+	result, _, err := client.YearlyStats(ref.String("2000"))
 	assert.NoError(t, err)
 
 	expected := &irstats.YearlyStats{

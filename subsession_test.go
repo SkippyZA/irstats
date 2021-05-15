@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/skippyza/irstats"
+	"github.com/skippyza/irstats/ref"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +20,7 @@ func TestSubSessionData(t *testing.T) {
 		fmt.Fprint(w, loadFixture("testdata/subsession_data.json"))
 	})
 
-	result, _, err := client.SubSessionData(irstats.String("1000"), irstats.String("2000"))
+	result, _, err := client.SubSessionData(ref.String("1000"), ref.String("2000"))
 	assert.NoError(t, err)
 
 	expected := &irstats.SubSessionResult{

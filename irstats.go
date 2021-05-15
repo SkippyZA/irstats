@@ -52,7 +52,7 @@ func NewClient(username, password string, options ...ClientOptionFunc) (*Client,
 	return c, nil
 }
 
-func (c *Client) do(path string, params *map[string]string, v interface{}) (*http.Response, error) {
+func (c *Client) do(path urlPath, params *map[string]string, v interface{}) (*http.Response, error) {
 	if err := c.assertLoggedIn(); err != nil {
 		return nil, err
 	}
@@ -113,16 +113,4 @@ func (c *Client) assertLoggedIn() error {
 	}
 
 	return c.login()
-}
-
-func String(s string) *string {
-	return &s
-}
-
-func Int(i int) *int {
-	return &i
-}
-
-func Float64(f float64) *float64 {
-	return &f
 }

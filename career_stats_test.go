@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/skippyza/irstats"
+	"github.com/skippyza/irstats/ref"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +20,7 @@ func TestCareerStats(t *testing.T) {
 		fmt.Fprint(w, loadFixture("testdata/career_stats.json"))
 	})
 
-	result, _, err := client.CareerStats(irstats.String("2000"))
+	result, _, err := client.CareerStats(ref.String("2000"))
 	assert.NoError(t, err)
 
 	expected := &irstats.CareerStats{
