@@ -206,12 +206,14 @@ type EventResultsRequest struct {
 	CarID           *int       `form:"carid"`
 	StartLow        *int       `form:"start_low"`
 	StartHigh       *int       `form:"start_high"`
+	StartTimeLow    *int       `form:"starttime_low"`
+	StartTimeHigh   *int       `form:"starttime_high"`
 	FinishLow       *int       `form:"finish_low"`
 	FinishHigh      *int       `form:"finish_high"`
 	IncidentsLow    *int       `form:"incidents_low"`
 	IncidentsHigh   *int       `form:"incidents_high"`
-	ChamppointsLow  *int       `form:"champpoints_low"`
-	ChamppointsHigh *int       `form:"champpoints_high"`
+	ChampPointsLow  *int       `form:"champpoints_low"`
+	ChampPointsHigh *int       `form:"champpoints_high"`
 }
 
 // Results returns a list with an EventResults object for each of a driver's
